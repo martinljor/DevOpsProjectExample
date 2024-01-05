@@ -78,8 +78,21 @@ Install Java: sudo apt install openjdk-17-jre -y
   Follow the wizard creating the user and assigning the IP address. Finally Jenkins is installed:
   ![image](https://github.com/martinljor/DevOpsProjectExample/assets/7529358/e8e3ce70-87b8-443a-9c77-57124daeaef8)
 
-  
+  Jenkin configs
 
+  Change in the default node the parameter "number of executors" 2 to 0.
+  Create a new node as jenk-agent:
+    * mark the option "permanent agent"
+    * any description
+    * number of executors is 2
+    * Remote root directory: /home/ubuntu
+    * Usage: leave it by default.
+    * Launch method: vi SSH.
+    * Host: Private IP address of jenk-agent
+    * Credentials:
+        Add a new one using the option SSH username with private key.
+      
+  
 
 
   
