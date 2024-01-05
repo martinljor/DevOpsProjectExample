@@ -91,6 +91,24 @@ Install Java: sudo apt install openjdk-17-jre -y
     * Host: Private IP address of jenk-agent
     * Credentials:
         Add a new one using the option SSH username with private key.
+        Username is ubuntu
+        The private key comes from master VM: .ssh/id_rsa
+    * Host Key Verification Strategy: non verifying verification strategy
+  A new node has to be created:
+![image](https://github.com/martinljor/DevOpsProjectExample/assets/7529358/a06560ba-0f68-4a9c-b55f-55ba542a1e8d)
+
+Test if there is connectivity between master and agent building test pipeline using default template as Hello World.
+  ![image](https://github.com/martinljor/DevOpsProjectExample/assets/7529358/9953c460-993b-4510-98a8-7454bca7039e)
+ 
+  ![image](https://github.com/martinljor/DevOpsProjectExample/assets/7529358/777df04c-8c9c-4491-8f8b-e111e830bdc8)
+
+  Buid now and wait the results. For success connection you will see:
+  ![image](https://github.com/martinljor/DevOpsProjectExample/assets/7529358/8ff4df55-8478-4989-89c9-44e857335848)
+
+  
+
+
+
       
   
 
