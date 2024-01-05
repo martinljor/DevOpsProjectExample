@@ -105,7 +105,7 @@ Test if there is connectivity between master and agent building test pipeline us
   Buid now and wait the results. For success connection you will see:
   ![image](https://github.com/martinljor/DevOpsProjectExample/assets/7529358/8ff4df55-8478-4989-89c9-44e857335848)
 
-  
+  Delete the test pipeline job.
 
 
 
