@@ -1,10 +1,12 @@
 # DevOps Project Example
 
-Using AWS, I am going to use the following sequence:
+Welcome to my GitHub repository, designed with the purpose of providing a comprehensive and detailed guide to systematically address the various roles that can be encountered in a DevOps environment. This repository aims to offer a step-by-step approach, highlighting best practices and strategies applicable to DevOps projects, with the goal of contributing to the development of specialized skills in this discipline crucial for the efficient implementation of technological solutions.
+
+Based on AWS, I am going to use the following sequence:
 
 ![Jenkins AWS](https://github.com/martinljor/DevOpsProjectExample/assets/7529358/021b390f-bfa6-4d71-98da-c5f7049883fc.png)
 
-## Create Jenkins.
+## Create [Jenkins](https://www.jenkins.io/)
 
 Go to the AWS console and create an EC2 instance with Ubuntu (free tier eligible):
 
@@ -294,7 +296,7 @@ Next step is to test it running the option "Build Now".
 ![BuildSuccess](https://github.com/martinljor/DevOpsProjectExample/blob/main/BuildSuccess.png)    
 
 
-
+## Create [SonarQube](https://www.sonarsource.com/products/sonarqube/)
 
 
 
