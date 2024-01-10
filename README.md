@@ -266,9 +266,35 @@ pipeline {
 }
 ```
 
-
-
 ## Test Artifacts and CI Job
+
+Go to Jenkins portal and create a new item:
+  * Name: DevOpsProjectExample-Testfile
+  * Type: pipeline
+
+    * Check "Discard old builds"
+    * "Max # of builds to keep": "2"
+  
+  * Pipeline
+    * Definition: "Pipeline script from SCM"
+    * SCM: "Git"
+
+      * Repositories
+        * Repository URL: https://github.com/martinljor/DevOpsProjectExample-Testfile
+        * Credentials: Select the one that was created before.
+    
+    * Branck Specifier: "*/main"
+
+"Apply" and then click "Save":
+
+![TestfileCreated](https://github.com/martinljor/DevOpsProjectExample/blob/main/TestfileCreated.png)
+
+Next step is to test it running the option "Build Now".
+
+![BuildSuccess](https://github.com/martinljor/DevOpsProjectExample/blob/main/BuildSuccess.png)    
+
+
+
 
 
 
