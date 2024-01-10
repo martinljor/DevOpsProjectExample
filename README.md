@@ -193,10 +193,33 @@ Also search for "eclipse":
 
 Then click "Install" and wait to finish with all items in "Success" state.
 
-Now there is a new item in "Manage Jenkins" --> "Tools" --> "Maven installations"
+Now there is a new item in "Manage Jenkins" --> "Tools" --> "Maven installations".
 Add new maven (Remember the name):
 
 ![AddNewMaven](https://github.com/martinljor/DevOpsProjectExample/blob/main/NewMaven.png)
+
+Click "Apply" and then "Save".
+
+### Add JDK installation
+
+Go to "Manage Jenkins" --> "Tools" --> "JDK installations" --> "Add JDK":
+
+* Name: remember the name that you enter.
+* Check the box for "Install automatically".
+  * Select the option "Install from adoptium.net".
+  * Select the jdk version (for this case will be v17.x.x).
+
+![AddJDK17](https://github.com/martinljor/DevOpsProjectExample/blob/main/AddJDK17.png)
+
+Click "Apply" and then "Save".
+
+
+
+
+
+
+
+
 
 
 ## Add GitHub Cred to Jenkins
