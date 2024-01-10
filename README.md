@@ -4,7 +4,7 @@ Using AWS, I am going to use the following sequence:
 
 ![Jenkins AWS](https://github.com/martinljor/DevOpsProjectExample/assets/7529358/021b390f-bfa6-4d71-98da-c5f7049883fc.png)
 
-## 1. Create Jenkins
+## Create Jenkins.
 
 Go to the AWS console and create an EC2 instance with Ubuntu (free tier eligible):
 
@@ -61,7 +61,7 @@ sudo systemctl start jenkins
 sudo systemctl status jenkins
 ```
 
-## 2. Create Jenkins Agent
+### 1. Create Jenkins Agent
 
 Go to the AWS console and create another EC2 instance with Ubuntu (free tier eligible) and the same configuration. Use the same key pair:
 
@@ -87,7 +87,7 @@ sudo apt install openjdk-17-jre -y
 
 ![Java Installation](https://github.com/martinljor/DevOpsProjectExample/assets/7529358/03b25a08-d8c1-43ef-b7fa-b95549a26d5b.png)
 
-## 3. Install Docker
+### 2. Install Docker
 
 In the VM jenk-agent install Docker:
 
@@ -101,7 +101,7 @@ Add your user to the Docker group:
 sudo usermod -aG docker $USER
 ```
 
-## 4. Configure SSH and Jenkins
+### 3. Configure SSH for Jenkins
 
 Add names and IPs of both servers in the file `/etc/hosts`.
 
@@ -144,7 +144,7 @@ Follow the wizard, creating the user and assigning the IP address. Finally, Jenk
 
 ![Jenkins Installed](https://github.com/martinljor/DevOpsProjectExample/assets/7529358/e8e3ce70-87b8-443a-9c77-57124daeaef8.png)
 
-### Jenkins Configuration
+### 4. Jenkins Configuration.
 
 Change in the default node the parameter 'Number of Executors' from 2 to 0.
 
@@ -166,6 +166,8 @@ A new node has to be created:
 
 ![Jenkins Node](https://github.com/martinljor/DevOpsProjectExample/assets/7529358/a06560ba-0f68-4a9c-b55f-55ba542a1e8d.png)
 
+### 5. Test Jenkins communication.
+
 Test if there is connectivity between master and agent by building a test pipeline using the default template as 'Hello World'.
 
 ![Jenkins Pipeline](https://github.com/martinljor/DevOpsProjectExample/assets/7529358/9953c460-993b-4510-98a8-7454bca7039e.png)
@@ -176,4 +178,22 @@ Build now and wait for the results. For a successful connection, you will see:
 
 ![Jenkins Build](https://github.com/martinljor/DevOpsProjectExample/assets/7529358/8ff4df55-8478-4989-89c9-44e857335848.png)
 
-Delete the test pipeline
+Delete the test pipeline.
+
+## Integrate Maven to Jenkins
+
+To integrate Maven its possible to use Jenkins plugins: 
+
+Login with admin user.
+Manager Jenkins --> Plugins --> Available plugins
+Search: "maven" and select the following items:
+
+![Maven search](image.png)
+
+
+
+
+## Add GitHub Cred to Jenkins
+
+
+
