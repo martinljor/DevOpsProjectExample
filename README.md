@@ -213,16 +213,27 @@ Go to "Manage Jenkins" --> "Tools" --> "JDK installations" --> "Add JDK":
 
 Click "Apply" and then "Save".
 
-
-
-
-
-
-
-
-
-
 ## Add GitHub Cred to Jenkins
+
+Go to "Manage Jenkins" --> "Credentials"
+Into the "Stores scped to Jenkins" and inside the "System" store created the is an action to add more credentials:
+
+![StoreAddCred](https://github.com/martinljor/DevOpsProjectExample/blob/main/StoreAddCred.png)
+
+* Kind: username and password.
+* Scope: Global.
+* Username: github username.
+* Password: github password.
+* ID: unique name for identification.
+
+![GitHubCreds](https://github.com/martinljor/DevOpsProjectExample/blob/main/GitHubCreds.png)
+
+
+## Create pipeline script = Jenkinsfile for Build
+
+
+## Test Artifacts and CI Job
+
 
 
 
