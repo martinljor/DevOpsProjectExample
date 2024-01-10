@@ -187,10 +187,16 @@ To integrate Maven its possible to use Jenkins plugins:
 Login with admin user.
 Manager Jenkins --> Plugins --> Available plugins
 Search: "maven" and select the following items:
+Also search for "eclipse":
 
-![Maven search](image.png)
+![Maven-eclip search](https://github.com/martinljor/DevOpsProjectExample/blob/main/Maven-eclipsearch.png)
 
+Then click "Install" and wait to finish with all items in "Success" state.
 
+Now there is a new item in "Manage Jenkins" --> "Tools" --> "Maven installations"
+Add new maven (Remember the name):
+
+![AddNewMaven](https://github.com/martinljor/DevOpsProjectExample/blob/main/NewMaven.png)
 
 
 ## Add GitHub Cred to Jenkins
