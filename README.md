@@ -691,3 +691,8 @@ stage("Trivy-Scan") {
           }
        }
 ```
+
+Go to Jenkins portal. Next step is to test it running the option "Build Now".
+
+![TrivyStageSuccess](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/TrivyStageSuccess.png)
+
