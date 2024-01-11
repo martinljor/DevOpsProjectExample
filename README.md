@@ -466,6 +466,39 @@ sudo systemctl status sonar
 
 ![SonarQubeStatus](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/SonarQubeStatus.png)
 
+Using the Public IP the login portal is available:
+
+![SonarQubeportal](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/SonarQubeportal.png)
+
+Login with admin/admin and change the password!
 
 
+## Integration between Jenkins and SonarQube
+
+Go to SonarQube portal and go to "My account".
+In the "security" tab shows a list of tokens that can be generated:
+
+* Name: Jenk-Sonar
+* Type: "Global Analysis Token"
+* Expires in: "No expiration"
+
+Click on "Generate" 
+
+![SonarTokenCreated](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/SonarTokenCreated.png)
+
+Then copy the token created to be use in Jenkins.
+
+Go to Jenkins portal using the Public IP of Jenkins VM master and port 8080.
+
+"Login" --> "Manage Jenkins" --> "Credentials" --> "Add new credentials":
+
+* Kind: secret text
+* Scope: "Global"
+* Secret: paste the token
+* ID: Jenk-Sonar
+* Description: "Jenkins + Sonar = token"
+
+![Jenkins-Credentials-Sonar](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/Jenkins-Credentials-Sonar.png)
+
+### Install plugins on Jenkins
 
