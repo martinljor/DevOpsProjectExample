@@ -555,15 +555,45 @@ stage ("SonarQube Analysis"){
         }
 ```
 
-#### Test on Jenkins
+##### Test on Jenkins - SonarQube Analysis
 
 Go to Jenkins portal, select the pipeline created before and select "Build Now":
 
 ![SuccessTestSonarQube](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/SuccessTestSonarQube.png)
 
+Notification at SonarQube porta:
+
+![SonarQubeNotportal](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/SonarQubeNotportal.png)
 
 
+#### Create Webhooks in SonarQube
 
+Go to SonarQube portal and create a Webhooks:
 
+Login --> Administration --> Configuration --> Webhooks --> Create
+
+* Name: Sonar-Webhook
+* URL: http://PrivateIPJenkMasterVM:8080/sonarqube-webhook
+* Secreate: empty
+
+Click "Create".
+
+Then go to Jenkinsfile and add "SonarQube Quality Gate" after "SonarQube Analysis" stage:
+
+```bash
+stage("SonarQube Quality Gate"){
+           steps {
+               script {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'Jenk-Sonar'
+                }	
+            }
+        }
+```
+
+##### Test on Jenkins - SonarQube Quality Gate
+
+Go to Jenkins portal, select the pipeline created before and select "Build Now":
+
+![SonarQubeQualGateSuccess](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/SonarQubeQualGateSuccess.png)
 
 
