@@ -668,3 +668,16 @@ Next step is to test it running the option "Build Now". The objective is to see 
 
 ![NewRepoDockerHub](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/NewRepoDockerHub.png)
 
+### Trivy Stage
+
+Add the following lines to Jenkinsfile after Docker stage:
+
+```bash
+stage("Trivy-Scan") {
+           steps {
+               script {
+	            sh ('docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image ashfaque9x/register-app-pipeline:latest --no-progress --scanners vuln  --exit-code 0 --severity HIGH,CRITICAL --format table')
+               }
+           }
+       }
+```
