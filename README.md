@@ -191,14 +191,14 @@ Manager Jenkins --> Plugins --> Available plugins
 Search: "maven" and select the following items:
 Also search for "eclipse":
 
-![Maven-eclip search](https://github.com/martinljor/DevOpsProjectExample/blob/main/Maven-eclipsearch.png)
+![Maven-eclip search](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/Maven-eclipsearch.png)
 
 Then click "Install" and wait to finish with all items in "Success" state.
 
 Now there is a new item in "Manage Jenkins" --> "Tools" --> "Maven installations".
 Add new maven (Remember the name):
 
-![AddNewMaven](https://github.com/martinljor/DevOpsProjectExample/blob/main/NewMaven.png)
+![AddNewMaven](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/NewMaven.png)
 
 Click "Apply" and then "Save".
 
@@ -211,7 +211,7 @@ Go to "Manage Jenkins" --> "Tools" --> "JDK installations" --> "Add JDK":
   * Select the option "Install from adoptium.net".
   * Select the jdk version (for this case will be v17.x.x).
 
-![AddJDK17](https://github.com/martinljor/DevOpsProjectExample/blob/main/AddJDK17.png)
+![AddJDK17](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/AddJDK17.png)
 
 Click "Apply" and then "Save".
 
@@ -220,7 +220,7 @@ Click "Apply" and then "Save".
 Go to "Manage Jenkins" --> "Credentials"
 Into the "Stores scped to Jenkins" and inside the "System" store created the is an action to add more credentials:
 
-![StoreAddCred](https://github.com/martinljor/DevOpsProjectExample/blob/main/StoreAddCred.png)
+![StoreAddCred](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/StoreAddCred.png)
 
 * Kind: username and password.
 * Scope: Global.
@@ -228,7 +228,7 @@ Into the "Stores scped to Jenkins" and inside the "System" store created the is 
 * Password: github password.
 * ID: unique name for identification.
 
-![GitHubCreds](https://github.com/martinljor/DevOpsProjectExample/blob/main/GitHubCreds.png)
+![GitHubCreds](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/GitHubCreds.png)
 
 
 ## Create pipeline script = Jenkinsfile for Build
@@ -289,14 +289,28 @@ Go to Jenkins portal and create a new item:
 
 "Apply" and then click "Save":
 
-![TestfileCreated](https://github.com/martinljor/DevOpsProjectExample/blob/main/TestfileCreated.png)
+![TestfileCreated](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/TestfileCreated.png)
 
 Next step is to test it running the option "Build Now".
 
-![BuildSuccess](https://github.com/martinljor/DevOpsProjectExample/blob/main/BuildSuccess.png)    
+![BuildSuccess](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/BuildSuccess.png)    
 
 
 ## Create [SonarQube](https://www.sonarsource.com/products/sonarqube/)
+
+For SonarQube its necessary to create another AWS EC2 instance with t3.medium instance type:
+
+  * Name: SonarQube
+  * OS: Ubuntu 22.04 (free tier)
+  * instance type: t3.medium 
+  * Key pair: used before.
+  * Storage: 15 GiB.
+
+Click "Launch instance".
+
+So, now there are three instances created:
+
+![ThreeInstances](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/ThreeInstances.png)
 
 
 
