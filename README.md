@@ -298,6 +298,7 @@ Next step is to test it running the option "Build Now".
 
 ## Create [SonarQube](https://www.sonarsource.com/products/sonarqube/)
 
+### AWS EC2 instance.
 For SonarQube its necessary to create another AWS EC2 instance with t3.medium instance type:
 
   * Name: SonarQube
@@ -311,6 +312,159 @@ Click "Launch instance".
 So, now there are three instances created:
 
 ![ThreeInstances](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/ThreeInstances.png)
+
+Connect to the VM using the key and ubuntu user, then run the following commands:
+
+```bash
+sudo apt update
+sudo apt upgrade
+```
+
+### [PostgreSQL](https://www.postgresql.org/)
+
+Add PostgreSQL repository:
+
+```bash
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo tee /etc/apt/trusted.gpg.d/pgdg.asc &>/dev/null
+```
+
+Lets install PostgrSQL:
+
+```bash
+sudo apt-get -y install postgresql postgresql-contrib
+sudo systemctl enable postgresql
+```
+
+Now login and create the database that SonarQube its going to use:
+```bash
+sudo passwd postgres
+su - postgres
+createuser sonar
+psql 
+ALTER USER sonar WITH ENCRYPTED password 'sonar';
+CREATE DATABASE sonarqube OWNER sonar;
+grant all privileges on DATABASE sonarqube to sonar;
+\q
+exit
+clear
+```
+
+Because Adoptium is part of this its necessary to add their repository and install temurin-java:
+
+```bash
+sudo su
+wget -O - https://packages.adoptium.net/artifactory/api/gpg/key/public | tee /etc/apt/keyrings/adoptium.asc
+echo "deb [signed-by=/etc/apt/keyrings/adoptium.asc] https://packages.adoptium.net/artifactory/deb $(awk -F= '/^VERSION_CODENAME/{print$2}' /etc/os-release) main" | tee /etc/apt/sources.list.d/adoptium.list
+
+apt-get update
+apt-get install temurin-17-jdk -y
+update-alternatives --config java
+/usr/bin/java --version
+exit
+clear
+```
+### Change kernel limits & paramenters
+
+Change the kernel limits for sonarqube user with the following command:
+
+```bash
+sudo su
+cat <<EOF >>/etc/security/limits.conf
+sonarqube   -   nofile   65536
+sonarqube   -   nproc    4096
+EOF
+exit
+```
+
+Change the kernel parameter to increate mapped memory regions, finally reboot the VM:
+
+```bash
+sudo su
+cat <<EOF >>/etc/sysctl.conf
+vm.max_map_count = 262144
+EOF
+
+exit
+sudo reboot
+```
+
+### Add inbound rule for SonarQube
+
+Go to AWS console, select the EC2 instance of SonarQube, security tab, select default security group.
+
+"Edit inbound rule" --> "Add rule":
+
+ * Source: Anywhere
+ * Port: 9000
+ * Protocol: TCP
+
+Click "Save rules"
+
+### Installation of [SonarQube](https://www.sonarsource.com/products/sonarqube/)
+
+```bash
+sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.9.0.65466.zip
+sudo apt-get install unzip -y
+sudo unzip sonarqube-9.9.0.65466.zip -d /opt
+sudo mv /opt/sonarqube-9.9.0.65466 /opt/sonarqube
+```
+
+Lets create an user for SonarQube and set permissions:
+
+```bash
+sudo groupadd sonar
+sudo useradd -c "SonarQube User" -d /opt/sonarqube -g sonar sonar
+sudo chown sonar:sonar /opt/sonarqube -R
+```
+
+#### SonarQube configuration
+
+```bash
+sudo sed -i 's/#sonar.jdbc.username=/sonar.jdbc.username=sonar/g' /opt/sonarqube/conf/sonar.properties
+
+sudo sed -i 's/#sonar.jdbc.password=/sonar.jdbc.password=sonar/g' /opt/sonarqube/conf/sonar.properties
+
+echo "sonar.jdbc.url=jdbc:postgresql://localhost:5432/sonarqube" | sudo tee -a "/opt/sonarqube/conf/sonar.properties"
+
+
+#Sonar service configuration
+
+sudo su
+touch /etc/systemd/system/sonar.service
+cat <<EOF >>/etc/systemd/system/sonar.service
+[Unit]
+Description=SonarQube service
+After=syslog.target network.target
+
+[Service]
+Type=forking
+
+ExecStart=/opt/sonarqube/bin/linux-x86-64/sonar.sh start
+ExecStop=/opt/sonarqube/bin/linux-x86-64/sonar.sh stop
+
+User=sonar
+Group=sonar
+Restart=always
+
+LimitNOFILE=65536
+LimitNPROC=4096
+
+[Install]
+WantedBy=multi-user.target
+EOF
+exit
+```
+
+#### Start and enable SonarQube services
+
+```bash
+sudo systemctl enable sonar
+sudo systemctl start sonar
+sudo systemctl status sonar
+```
+
+![SonarQubeStatus](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/SonarQubeStatus.png)
 
 
 
