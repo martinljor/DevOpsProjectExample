@@ -6,6 +6,20 @@ Based on AWS, I am going to use the following sequence:
 
 ![Jenkins AWS](https://github.com/martinljor/DevOpsProjectExample/assets/7529358/021b390f-bfa6-4d71-98da-c5f7049883fc.png)
 
+| Contenido                                       |
+| ----------------------------------------------- |
+| [Crear Jenkins](#create-jenkins)                |
+| [1. Crear Agente Jenkins](#1-create-jenkins-agent)|
+| [2. Instalar Docker](#2-install-docker)         |
+| [3. Configurar SSH para Jenkins](#3-configure-ssh-for-jenkins) |
+| [4. Configuración de Jenkins](#4-jenkins-configuration)   |
+| [Integrar Maven a Jenkins](#integrate-maven-to-jenkins)    |
+| [Crear SonarQube](#create-sonarqube)                      |
+| [Integración entre Jenkins y SonarQube](#integration-between-jenkins-and-sonarqube)  |
+| [Docker - Build & Push](#docker-build--push)           |
+| [Trivy Stage](#trivy-stage)                             |
+
+
 ## Create [Jenkins](https://www.jenkins.io/)
 
 Go to the AWS console and create an EC2 instance with Ubuntu (free tier eligible):
