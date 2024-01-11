@@ -597,3 +597,74 @@ Go to Jenkins portal, select the pipeline created before and select "Build Now":
 ![SonarQubeQualGateSuccess](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/SonarQubeQualGateSuccess.png)
 
 
+## Docker - Build & Push
+
+The objective of this point is to show how to build and push docker images using pipeline script from Jenkins. You must have an account on [docker hub](https://hub.docker.com/) and create a new token at the security tab on docker page.
+
+Login with admin user.
+Manager Jenkins --> Plugins --> Available plugins
+Search: "docker" and select the following items:
+
+* Docker
+* Docker Commons
+* Docker Pipeline
+* Docker API
+* docker-build-step
+* CloudBees Docker Build and Push
+
+![DockerInstallPlugin](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/DockerInstallPlugin.png)
+
+Click "Install"
+Check the box to makes Jenkins restart when installation is complete.
+
+Login again with admin user and go to "Manage Jenkins" --> "Credentials"
+Into the "Stores scped to Jenkins" and inside the "System" store created the is an action to add more credentials:
+
+* Kind: username and password.
+* Scope: Global.
+* Username: Your username of Docker Hub.
+* Password: Docker Hub token created.
+* ID: unique name for identification.
+
+### Docker - Jenkinsfile env variables
+
+Edit the jenkinsfile and add the following lines after tools in pipeline:
+
+```bash
+ environment {
+	    APP_NAME = "devopsprojectexample-testfile"
+            RELEASE = "1.0.0"
+            DOCKER_USER = "username" # username of docker hub.
+            DOCKER_PASS = 'dockerhubID' # use the same ID that was created before.
+            IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
+            IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
+    }
+```
+
+Add new stage for Docker build and push into the jenkinsfile after the stage "SonarQube Quality Gate":
+
+```bash
+stage("B&P Docker-Image") {
+            steps {
+              script {
+                docker.withRegistry('',DOCKER_PASS) {
+                  docker_image = docker.build "${IMAGE_NAME}"
+                  }
+
+                  docker.withRegistry('',DOCKER_PASS) {
+                    docker_image.push("${IMAGE_TAG}")
+                    docker_image.push('latest')
+                    }
+                }
+              }
+            }
+           
+```
+
+Go to Jenkins portal.
+Next step is to test it running the option "Build Now". The objective is to see that there is a new repository at Docker Hub and a new stage at Jenkins pipeline:
+
+![JenkinsDockerStage](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/JenkinsDockerStage.png)
+
+![NewRepoDockerHub](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/NewRepoDockerHub.png)
+
