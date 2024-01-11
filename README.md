@@ -502,3 +502,61 @@ Go to Jenkins portal using the Public IP of Jenkins VM master and port 8080.
 
 ### Install plugins on Jenkins
 
+Login with admin user.
+Manager Jenkins --> Plugins --> Available plugins
+Search: "sonar" and select the following items:
+
+* SonarQube Scanner
+* Sonar Quality Gates
+* Quality Gates
+
+![SonarPlugin](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/SonarPlugin.png)
+
+Click "Install"
+Check the box to makes Jenkins restart when installation is complete.
+
+#### Configuration for Jenkins and SonarQube
+
+Manage Jenkins --> System --> SonarQube Servers --> add
+
+* Name: SonarQubeServer
+* Server URL: Private IP Address from AWS console.
+* Server authentication token: Jenk-Sonar crated before.
+
+![AddSonarQubeServer](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/AddSonarQubeServer.png)
+
+Click "Apply" and then "Save".
+
+#### SonarQube Scanner
+
+For installation go to:
+Manage Jenkins --> Tools --> SonarQube Scanner installations:
+
+Click on "Add SonarQube Scanner":
+
+* Name: SonarQube-Scanner
+* Check "Install automatically"
+
+Click "Apply" and "Save".
+
+#### Add Stage on Jenkins pipeline file
+
+Go to Jenkinsfile and add "SonarQube Analysis" after "Test Application" stage:
+
+```bash
+stage ("SonarQube Analysis"){
+            steps {
+                scripts {
+                    withSonarQubeEnv(credentialsId: 'Jenk-Sonar') {
+                        sh "mvn sonar:sonar"
+                    }
+                }
+            }
+        }
+```
+
+
+
+
+
+
