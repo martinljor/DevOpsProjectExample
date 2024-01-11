@@ -555,6 +555,13 @@ stage ("SonarQube Analysis"){
         }
 ```
 
+#### Test on Jenkins
+
+Go to Jenkins portal, select the pipeline created before and select "Build Now":
+
+![SuccessTestSonarQube](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/SuccessTestSonarQube.png)
+
+
 
 
 
