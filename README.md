@@ -11,14 +11,14 @@ Based on AWS, I am going to use the following sequence:
 
 | Content                                       |
 | ----------------------------------------------- |
-| [Crear Jenkins](#create-jenkins)                |
-| [Crear Agente Jenkins](#1-create-jenkins-agent)|
-| [Instalar Docker](#2-install-docker)         |
-| [Configurar SSH para Jenkins](#3-configure-ssh-for-jenkins) |
-| [Configuración de Jenkins](#4-jenkins-configuration)   |
-| [Integrar Maven a Jenkins](#integrate-maven-to-jenkins)    |
-| [Crear SonarQube](#create-sonarqube)                      |
-| [Integración entre Jenkins y SonarQube](#integration-between-jenkins-and-sonarqube)  |
+| [Create Jenkins](#create-jenkins)                |
+| [Create Jenkins Agent](#1-create-jenkins-agent)|
+| [Install Docker](#2-install-docker)         |
+| [Configure SSH for Jenkins](#3-configure-ssh-for-jenkins) |
+| [Jenkins Configuration](#4-jenkins-configuration)   |
+| [Integrate Maven to Jenkins](#integrate-maven-to-jenkins)    |
+| [Create SonarQube](#create-sonarqube)                      |
+| [Integration between Jenkins and SonarQube](#integration-between-jenkins-and-sonarqube)  |
 | [Docker - Build & Push](#docker-build--push)           |
 | [Trivy Stage](#trivy-stage)                             |
 
