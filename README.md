@@ -715,3 +715,74 @@ Go to Jenkins portal. Next step is to test it running the option "Build Now".
 
 ![TrivyStageSuccess](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/TrivyStageSuccess.png)
 
+
+## Kubertenes + AWS EKS
+
+Setup a new instance in AWS EC2 with ubuntu:
+Go to the AWS console and create an EC2 instance with Ubuntu (free tier eligible):
+
+- type t2.micro
+- 8GB for storage also (free tier eligible).
+- Public IP Enable.
+- Use the existing key pair.
+
+Connect to the VM using the key and ubuntu user, then run the following commands:
+
+```bash
+sudo apt update
+sudo apt upgrade
+```
+
+Change the hostname of the VM using the file `/etc/hostname` and then reboot:
+
+```bash
+sudo nano /etc/hostname  # I used eks-bootstrap-srv
+sudo reboot
+```
+### Install AWSCLI
+
+Login again and install [awscli](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html):
+
+```bash
+sudo su
+apt-get install unzip -y
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscli.zip"
+unzip awscli.zip
+cd aws/
+./install
+/usr/local/bin/aws --version
+```
+
+![awscliInstall](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/awscliInstall.png)
+
+
+### Install kubectl
+
+To install [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/) tool run the following commands:
+
+```bash
+sudo su
+cd
+curl -LO https://dl.k8s.io/release/v1.29.0/bin/linux/amd64/kubectl
+chmod +x kubectl 
+mv kubectl /bin
+kubectl version --output=yaml
+```
+
+![kubectlInstall](https://github.com/martinljor/DevOpsProjectExample/blob/main/imageskubectlInstall.png)
+
+### Install eksctl
+
+To install [eksctl](https://eksctl.io/installation/) tool run the following commands:
+
+```bash
+ARCH=amd64
+PLATFORM=$(uname -s)_$ARCH
+
+curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$PLATFORM.tar.gz"
+
+tar -zxvf eksctl_Linux_amd64.tar.gz
+sudo mv eksctl /usr/local/bin/
+```
+
+![eksctlInstall](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/eksctlInstall.png)
