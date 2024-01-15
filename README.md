@@ -896,8 +896,137 @@ Copy and paste it in a browser and login with the admin password desovered.
 
 Go to user info --> update password --> change the password!
 
+### Join ArgoCd <--> EKS
+
+From EKS bootstrap server run the following command:
+
+```bash
+argocd login externalIP.amazonaws.com --username admin
+```
+
+Now from ArgoCd console check the connection between both services:
+
+Login with admin --> Settings --> Clusters:
+
+![EKSClusterArgoCD](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/EKSClusterArgoCD.png)
+
+
+Also add the EKS cluster with ArgoCd command line:
+
+```bash
+sudo su
+kubectl config get-contexts
+### take the name and paste in the next command
+
+argocd cluster add NAME-EXPOSED --name DevOps-eks-cluster
+```
+
+Look again at ArgoCd Cluster UI:
+
+![ArgoCdEKSAdd2](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/ArgoCdEKSAdd2.png)
 
 
 
+## ArgoCd --> Gitops Repo
+
+At the ArgoCd portal its necessary to add a GitHub repository:
+
+Login to ArgoCd Admin portal --> Settings --> Repositories --> Connect Repo.
+
+* Via HTTPS
+* Type: git
+* Project: "DevOpsProject"
+* Repositorty URL
+* Username: (Github username)
+* Password: (token created)
+
+![GitOpsConnectionSuccess](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/GitOpsConnectionSuccess.png)
+
+
+Now create a new App from the ArgoCd console:
+
+Applications --> New App
+
+* Application Name: devopsprojectexample-testfile
+* Project Name: default
+* Sync policy: Automatic
+  * check "Prune resources" & "Self heal"
+
+* Repository URL: Select the one was created.
+* Path: ./
+* Destination: Select the EKS cluster connected.
+* Namespace: default
+
+Click on "Create"
+
+Wait to finish with the sync and you should see all green:
+
+![ArgoCdAllSynced](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/ArgoCdAllSynced.png)
+
+### GitOps Repo
+
+At this repo i created 2 files:
+
+* service.yaml
+* deployment.yaml
+
+#### service.yaml
+
+```bash
+apiVersion: v1
+kind: Service
+metadata:
+  name: devopsprojectexample-service
+  labels:
+    app: devopsprojectexample-testfile
+spec:
+  selector:
+    app: devopsprojectexample-testfile
+
+  ports:
+    - port: 8080
+      targetPort: 8080
+
+  type: LoadBalancer
+```
+
+#### deployment.yaml
+```bash
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: DevOpsProjectExample-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: devopsprojectexample-testfile
+  template:
+    metadata:
+      labels:
+        app: devopsprojectexample-testfile
+    spec:
+      containers:
+        - name: devopsprojectexample-app
+          image: thegangg/devopsprojectexample-testfile:latest
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080
+```
+
+### Service running on pods
+
+if the items were done correctly you can see a tomact default page running as your application.
+
+To do that you have to copy the external IP address using the command:
+
+```bash
+kubectl get svc
+```
+
+use the port 8080 and in the folder webapp/ you can see the application itself.
 
 
