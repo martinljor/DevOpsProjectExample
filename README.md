@@ -6,7 +6,7 @@ Welcome to my GitHub repository, designed with the purpose of providing a compre
 
 Based on Amazon Web Services (AWS), I am going to use the following sequence:
 
-![Jenkins AWS](https://github.com/martinljor/DevOpsProjectExample/tree/main/images/Sequence.png)
+![Jenkins AWS](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/Sequence.png)
 
 
 
