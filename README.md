@@ -25,8 +25,8 @@ Based on Amazon Web Services (AWS), I am going to use the following sequence:
 | [Kubertenes + AWS EKS](#kubertenes--aws-eks)           |
 | [Create ArgoCd Services](#create-argocd-services)                             |
 | [Join ArgoCd <--> EKS](#join-argocd----eks)                             |
-| [ArgoCd --> Gitops Repo](#trivy-stage)                             |
-| [Fully automation with all the services configured.](#trivy-stage)                             |
+| [ArgoCd --> Gitops Repo](#argocd----gitops-repo)                             |
+| [Fully automation with all the services configured.](#fully-automation-with-all-the-services-configured)                             |
 
 
 
