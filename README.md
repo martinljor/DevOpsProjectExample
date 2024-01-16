@@ -2,11 +2,13 @@
 
 Welcome to my GitHub repository, designed with the purpose of providing a comprehensive and detailed guide to systematically address the various roles that can be encountered in a DevOps environment. This repository aims to offer a step-by-step approach, highlighting best practices and strategies applicable to DevOps projects, with the goal of contributing to the development of specialized skills in this discipline crucial for the efficient implementation of technological solutions.
 
-Based on AWS, I am going to use the following sequence:
+# Summary
 
-![Jenkins AWS](https://github.com/martinljor/DevOpsProjectExample/assets/7529358/021b390f-bfa6-4d71-98da-c5f7049883fc.png)
+Based on Amazon Web Services (AWS), I am going to use the following sequence:
 
+![Jenkins AWS](https://github.com/martinljor/DevOpsProjectExample/images/Sequence.png)
 
+![Sequence](Sequence.png)
 
 
 | Content                                       |
@@ -1027,6 +1029,140 @@ To do that you have to copy the external IP address using the command:
 kubectl get svc
 ```
 
-use the port 8080 and in the folder webapp/ you can see the application itself.
+Use the port 8080 and in the folder webapp/ you can see the application itself.
 
 
+## Fully automation with all the actors
+
+Go to Jenkins portal and add new item:
+
+* Name: devops-example-project-cd
+* Pipeline
+  * Description: 
+  * Check discard old builds
+  * Max # of builds to keep: 2
+  * Check "This project is parametrized" --> Add parameter.
+    * String parameter:
+      * Name: IMAGE_TAG
+  * Check "Trigger builds remotely"
+    * Authentication token: devops-example-project-token
+  * Pipeline;
+    * Definition: "Pipeline script from SCM"
+        * SCM: Git
+          * Repository URL: GitHub URL of the app
+          * Credentials: 
+        * Script path: Jenkinsfile
+        * Branck Specifier: "*/main"
+
+Click "Apply" and then "Save"
+
+### Edit Jenkins file
+
+Go to the repository where the Jenkisfile is and edit that file. Add the following stage after "Cleanup artifacts" stage:
+
+```bash
+stage("Trigger CD Pipeline") {
+            steps {
+                script {
+                    sh "curl -v -k --user martin:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'JenkinsMasterDNSname:8080/job/devops-example-project-cd/buildWithParameters?token=devops-example-project-token'"
+                }
+            }
+       }
+```
+
+In the same file, look for (at begining) environment and add the followin line after IMAGE_TAG:
+
+```bash
+JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
+```
+
+
+### Add token name on Jenkins
+
+Give access to the username that you insert in the previous stage. Go to Jenkins portal --> username --> configure --> add new token:
+
+![AddnewtokenJenkins](https://github.com/martinljor/DevOpsProjectExample/blob/main/imagesAddnewtokenJenkins.png)
+
+Click "Generate" and then copy the token.
+
+Then go to Jenkins portal --> Manage Jenkins --> Credentials --> Add new credentials
+
+* Kind: Secret text
+* Scope: global
+* Secret: Paste the token.
+* ID: JENKINS_API_TOKEN
+
+Click on "Create"
+
+
+### Create pipeline for gitops repo
+
+Go to GitHub repository where deployment and service.yaml are and add new file:
+
+Name: Jenkinsfile
+Content:
+
+```bash
+pipeline {
+    agent { label "jenk-agent" }
+    environment {
+              APP_NAME = "devopsprojectexample-testfile"
+    }
+
+    stages {
+        stage("Cleanup") {
+            steps {
+                cleanWs()
+            }
+        }
+
+        stage("Check") {
+               steps {
+                   git branch: 'main', credentialsId: 'GitHub-martinljor', url: 'https://github.com/martinljor/DevOpsProjectExampleGitOps'
+               }
+        }
+
+        stage("Update deployment tags") {
+            steps {
+                sh """
+                   cat deployment.yaml
+                   sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
+                   cat deployment.yaml
+                """
+            }
+        }
+
+        stage("Push to Git") {
+            steps {
+                sh """
+                   git config --global user.name "martinljor"
+                   git config --global user.email "tinchom@gmail.com"
+                   git add deployment.yaml
+                   git commit -m "Updated Deployment Manifest"
+                """
+                withCredentials([gitUsernamePassword(credentialsId: 'GitHub-martinljor', gitToolName: 'Default')]) {
+                  sh "git push https://github.com/martinljor/DevOpsProjectExampleGitOps main"
+                }
+            }
+        }
+      
+    }
+}
+```
+
+
+### Add Schedule on CI
+
+Go to Jenkins and edit the first item that was created:
+
+* Check the option "Poll SCM" and add "* * * * *"
+
+Click "Apply" and then "Save"
+
+With this last parameter it will monitor the repository of the app and every change/commit executed it will run the CI/CD stages!
+
+![CDpipeline](CDpipeline.png)
+
+
+
+Thanks a lot if you reach at this line !! :) 
