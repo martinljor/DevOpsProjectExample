@@ -1085,7 +1085,7 @@ JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
 
 Give access to the username that you insert in the previous stage. Go to Jenkins portal --> username --> configure --> add new token:
 
-![AddnewtokenJenkins](https://github.com/martinljor/DevOpsProjectExample/blob/main/imagesAddnewtokenJenkins.png)
+![AddnewtokenJenkins](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/AddnewtokenJenkins.png)
 
 Click "Generate" and then copy the token.
 
