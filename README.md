@@ -1165,7 +1165,7 @@ Click "Apply" and then "Save"
 
 With this last parameter it will monitor the repository of the app and every change/commit executed it will run the CI/CD stages!
 
-![CDpipeline](CDpipeline.png)
+![CDpipeline](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/CDpipeline.png)
 
 
 ## Contribute
