@@ -1167,6 +1167,7 @@ With this last parameter it will monitor the repository of the app and every cha
 
 ![CDpipeline](https://github.com/martinljor/DevOpsProjectExample/blob/main/images/CDpipeline.png)
 
+Finally the last stage will trigger to push the changes to Git.
 
 ## Contribute
 
