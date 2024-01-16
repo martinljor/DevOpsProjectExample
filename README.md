@@ -22,9 +22,9 @@ Based on Amazon Web Services (AWS), I am going to use the following sequence:
 | [Integration between Jenkins and SonarQube](#integration-between-jenkins-and-sonarqube)  |
 | [Docker - Build & Push](#docker-build--push)           |
 | [Trivy Stage](#trivy-stage)                             |
-| [Kubertenes + AWS EKS](#kubernetes-+-aws-eks)           |
+| [Kubertenes + AWS EKS](#kubertenes--aws-eks)           |
 | [Create ArgoCd Services](#create-argocd-services)                             |
-| [Trivy Stage](#trivy-stage)                             |
+| [Join ArgoCd <--> EKS](#trivy-stage)                             |
 
 
 
