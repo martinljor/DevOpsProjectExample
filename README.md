@@ -1168,4 +1168,9 @@ With this last parameter it will monitor the repository of the app and every cha
 ![CDpipeline](CDpipeline.png)
 
 
+## Contribute
+
+Contributions are always welcome! Please read the [contribution guidelines](contributing.md) first.
+
 Thanks a lot if you reach at this line !! :) 
+Give me a Star if you like it!
